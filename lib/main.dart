@@ -34,12 +34,21 @@ class _CharacterSheetState extends State<CharacterSheet> {
   String characterClass = '';
   String race = '';
   int level = 1;
-  int hitPoints = 10;
+  int strength = 10;
+  int constitution = 10;
+  int intelligence = 10;
+  int wisdom = 10;
+  int hitPoints = 0;
+  int mana = 0;
   String description = '';
   List<InventoryItem> inventory = [];
 
   @override
   Widget build(BuildContext context) {
+    // Recalcula os pontos de vida e mana com base nos atributos
+    hitPoints = constitution + strength;
+    mana = intelligence + wisdom;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Ficha de RPG'),
@@ -116,32 +125,73 @@ class _CharacterSheetState extends State<CharacterSheet> {
               ),
               SizedBox(height: 20.0),
               Text(
+                'Força:',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    strength = int.tryParse(value) ?? 0;
+                  });
+                },
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                'Constituição:',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    constitution = int.tryParse(value) ?? 0;
+                  });
+                },
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                'Inteligência:',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    intelligence = int.tryParse(value) ?? 0;
+                  });
+                },
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                'Sabedoria:',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    wisdom = int.tryParse(value) ?? 0;
+                  });
+                },
+              ),
+              SizedBox(height: 20.0),
+              Text(
                 'Pontos de Vida:',
                 style: TextStyle(fontSize: 18.0),
               ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.remove),
-                    onPressed: () {
-                      setState(() {
-                        hitPoints = hitPoints > 0 ? hitPoints - 1 : hitPoints;
-                      });
-                    },
-                  ),
-                  Text(
-                    '$hitPoints',
-                    style: TextStyle(fontSize: 18.0),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      setState(() {
-                        hitPoints++;
-                      });
-                    },
-                  ),
-                ],
+              Text(
+                '$hitPoints',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                'Mana:',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Text(
+                '$mana',
+                style: TextStyle(fontSize: 18.0),
               ),
               SizedBox(height: 20.0),
               Text(
